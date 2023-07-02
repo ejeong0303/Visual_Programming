@@ -27,13 +27,15 @@ clock = pygame.time.Clock()
 ufo_disappear_sound = pygame.mixer.Sound('assets/ufo.mp3')  # Load the sound
 
 def ellipseRotate(degree, degreeSpeed, a, b, center_x, center_y):
-    degree += degreeSpeed
-    x = int(math.cos(degree*2*math.pi/360)*a) + center_x
-    y = int(math.sin(degree*2*math.pi/360)*b) + center_y
-    return degree, [x, y]
+    degree += degreeSpeed # Adds degreeSpeed to degree. It's used to calculate the new position of a planet on its orbit.
+    x = int(math.cos(degree*2*math.pi/360)*a) + center_x # calculate the new x coordinate for a planet on its elliptical orbit.
+    y = int(math.sin(degree*2*math.pi/360)*b) + center_y # calculate the new y coordinate for a planet on its elliptical orbit.
+    return degree, [x, y] # Returns the updated degree and the new coordinates.
 
 class Planet():
     def __init__(self, color, radius, speed, a, b, center_x, center_y, self_rotation_speed):
+        # Sets up a planet with a specific color, radius, speed of rotation around the sun, a and b (parameters for the ellipse path), 
+        # center point coordinates, rotation speed of the planet around its own axis.
         self.color = color
         self.radius = radius
         self.degree = 0
@@ -47,19 +49,21 @@ class Planet():
         self.self_rotation_degree = 0
     
     def update(self):
+        # Updates the location of the planet along its elliptical orbit and its rotation around its own axis.
         self.degree, self.loc = ellipseRotate(self.degree, self.degreeSpeed, self.a, self.b, self.center_x, self.center_y)
-        self.self_rotation_degree += self.self_rotation_speed  # Increment the rotation degree for self-rotation
+        self.self_rotation_degree += self.self_rotation_speed
     
     def draw(self):
+        # Draws the planet and a line from the center to the edge of the planet showing the current rotation state.
         pygame.draw.circle(screen, self.color, self.loc, self.radius)
-        # Draw a line from the center to the end of the radius based on the self-rotation
         end_x = self.loc[0] + self.radius * math.cos(math.radians(self.self_rotation_degree))
         end_y = self.loc[1] + self.radius * math.sin(math.radians(self.self_rotation_degree))
         pygame.draw.line(screen, BLACK, self.loc, (end_x, end_y))
 
-
 class Moon():
     def __init__(self, color, radius, speed, distance, parent_planet, self_rotation_speed):
+        # Sets up a moon with a specific color, radius, rotation speed around its planet, distance from the planet, 
+        # the planet it orbits around, and rotation speed around its own axis.
         self.color = color
         self.radius = radius
         self.speed = speed
@@ -69,20 +73,22 @@ class Moon():
         self.self_rotation_degree = 0
     
     def update(self):
-        self.self_rotation_degree += self.speed  # Increment the rotation degree for self-rotation
+        # Updates the rotation of the moon around its own axis.
+        self.self_rotation_degree += self.speed
     
     def draw(self):
+        # Draws the moon in its position relative to its parent planet and a line from the center to the edge of the moon showing the current rotation state.
         parent_x, parent_y = self.parent_planet.loc
         x = int(parent_x + self.distance * math.cos(math.radians(self.self_rotation_degree)))
         y = int(parent_y + self.distance * math.sin(math.radians(self.self_rotation_degree)))
         pygame.draw.circle(screen, self.color, (x, y), self.radius)
-        # Draw a line from the center to the end of the radius based on the self-rotation
         end_x = x + self.radius * math.cos(math.radians(self.self_rotation_degree))
         end_y = y + self.radius * math.sin(math.radians(self.self_rotation_degree))
         pygame.draw.line(screen, BLACK, (x, y), (end_x, end_y))
 
 class Sun():
     def __init__(self, color, radius, center_x, center_y):
+        # Sets up the sun with a specific color, radius, and center coordinates.
         self.color = color
         self.radius = radius
         self.loc = [center_x, center_y]
@@ -90,19 +96,17 @@ class Sun():
         self.flame_angle = 15  # Angle between flames in degrees
         
     def draw(self):
+        # Draws the sun, a halo around it and flames coming out of it.
         pygame.draw.circle(screen, self.color, self.loc, self.radius)  # Draw the sun itself
 
-        # Draw halo
         halo_color = (255, 140, 0)  # A color for the halo (light orange)
         pygame.draw.circle(screen, halo_color, self.loc, self.radius + 10, 2)  # Draw the halo around the sun
 
-        # Draw flames
         flame_color = (255, 69, 0)  # A color for the flames (orange red)
         for angle in range(0, 360, self.flame_angle):
             end_x = self.loc[0] + (self.radius + self.flame_length) * math.cos(math.radians(angle))
             end_y = self.loc[1] + (self.radius + self.flame_length) * math.sin(math.radians(angle))
             pygame.draw.line(screen, flame_color, self.loc, (end_x, end_y), 2)
-
 
 class Star():
     def __init__(self):
@@ -132,8 +136,7 @@ class Star():
 
     def draw(self):
         pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), 1)
-
-        
+    
 
 class UFO():
     def __init__(self, image, sound, speed, x, y):
@@ -190,19 +193,19 @@ ufo_image2 = pygame.transform.scale(ufo_image2, (40, 40))
 ufo1 = UFO(ufo_image1, ufo_disappear_sound, 7, np.random.uniform(0, WINDOW_WIDTH), np.random.uniform(0, WINDOW_HEIGHT))
 ufo2 = UFO(ufo_image2, ufo_disappear_sound, 7, np.random.uniform(0, WINDOW_WIDTH), np.random.uniform(0, WINDOW_HEIGHT))
 
-# Sun (red circle) creation
+# Sun (red circle) creation (color, radius, position)
 sun = Sun(RED, 50, WINDOW_WIDTH/2, WINDOW_HEIGHT/2)
 
-# Earth (blue circle) creation
+# Earth (blue circle) creation (color, radius, degree speed, parameters for elliptical orbit, self rotation speed)
 earth = Planet(BLUE, 30, 0.1, 300, 200, WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 1)  # counterclockwise
 
-# Mars (orange circle) creation
+# Mars (orange circle) creation (color, radius, degree speed, parameters for elliptical orbit, self rotation speed)
 mars = Planet(ORANGE, 45, 0.07, 500, 400, WINDOW_WIDTH/2, WINDOW_HEIGHT/2, -1)  # clockwise
 
-# Earth's Moon creation
+# Earth's Moon creation (color, radius, distance from the parent planet, parent planet, self rotation speed)
 moon = Moon(GRAY, 10, 1, 100, earth, 1)  # counterclockwise
 
-# Mars' Moons creation
+# Mars' Moons creation (color, radius, distance from the parent planet, parent planet, self rotation speed)
 phobos = Moon(GRAY, 8, 1.5, 80, mars, 1)  # counterclockwise
 deimos = Moon(GRAY, 6, 2, 120, mars, -1)  # clockwise
 
@@ -241,6 +244,7 @@ def main():
 
         # Drawing Earth's orbit path
         pygame.draw.ellipse(screen, WHITE, [WINDOW_WIDTH/2 - earth.a, WINDOW_HEIGHT/2 - earth.b, 2*earth.a, 2*earth.b], 1)
+        # [x, y, width, height]: A rectangle that the ellipse will be bound inside of, specified as a list or tuple of four elements
 
         # Drawing Earth and Moon
         earth.draw()
@@ -248,7 +252,8 @@ def main():
 
         # Drawing Mars' orbit path
         pygame.draw.ellipse(screen, WHITE, [WINDOW_WIDTH/2 - mars.a, WINDOW_HEIGHT/2 - mars.b, 2*mars.a, 2*mars.b], 1)
-
+        # [x, y, width, height]: A rectangle that the ellipse will be bound inside of, specified as a list or tuple of four elements
+        
         # Drawing Mars and Moons
         mars.draw()
         phobos.draw()

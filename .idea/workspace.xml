@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cfa3524-77bc-42b8-9e8a-0b9812e3d496" name="Default Changelist" comment="project1 revision commit" />
+    <list default="true" id="4cfa3524-77bc-42b8-9e8a-0b9812e3d496" name="Default Changelist" comment="project1 2nd revision commit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -173,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688319121959</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="project1 2nd revision commit">
+      <created>1688320608420</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688320608420</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -190,6 +197,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="project1 commit" />
     <MESSAGE value="project1 revision commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="project1 revision commit" />
+    <MESSAGE value="project1 2nd revision commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="project1 2nd revision commit" />
   </component>
 </project>

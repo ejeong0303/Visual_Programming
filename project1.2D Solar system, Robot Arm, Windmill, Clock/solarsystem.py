@@ -86,9 +86,23 @@ class Sun():
         self.color = color
         self.radius = radius
         self.loc = [center_x, center_y]
+        self.flame_length = 20  # Length of the "flames"
+        self.flame_angle = 15  # Angle between flames in degrees
         
     def draw(self):
-        pygame.draw.circle(screen, self.color, self.loc, self.radius)
+        pygame.draw.circle(screen, self.color, self.loc, self.radius)  # Draw the sun itself
+
+        # Draw halo
+        halo_color = (255, 140, 0)  # A color for the halo (light orange)
+        pygame.draw.circle(screen, halo_color, self.loc, self.radius + 10, 2)  # Draw the halo around the sun
+
+        # Draw flames
+        flame_color = (255, 69, 0)  # A color for the flames (orange red)
+        for angle in range(0, 360, self.flame_angle):
+            end_x = self.loc[0] + (self.radius + self.flame_length) * math.cos(math.radians(angle))
+            end_y = self.loc[1] + (self.radius + self.flame_length) * math.sin(math.radians(angle))
+            pygame.draw.line(screen, flame_color, self.loc, (end_x, end_y), 2)
+
 
 class Star():
     def __init__(self):

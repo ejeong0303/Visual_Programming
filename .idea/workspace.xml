@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cfa3524-77bc-42b8-9e8a-0b9812e3d496" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/3 파이썬 게임.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/3 파이썬 게임.iml" afterDir="false" />
+    <list default="true" id="4cfa3524-77bc-42b8-9e8a-0b9812e3d496" name="Default Changelist" comment="project1 commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assignment1.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/assignment1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assignment2.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/assignment2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assignment3.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/assignment3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assignment4.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/assignment4.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assignment5.py" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/assignment5.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solar_system.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,6 +154,14 @@
       <option name="presentableId" value="Default" />
       <updated>1613137580379</updated>
     </task>
+    <task id="LOCAL-00001" summary="project1 commit">
+      <created>1688316439839</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1688316439839</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -175,5 +174,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="project1 commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="project1 commit" />
   </component>
 </project>

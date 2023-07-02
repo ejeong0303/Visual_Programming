@@ -86,15 +86,40 @@ class Sun():
         self.color = color
         self.radius = radius
         self.loc = [center_x, center_y]
-        self.tilt_angle = 0
-    
-    def update(self):
-        self.tilt_angle += 0.5 * self.radius / 50  # Increment the tilt angle for self-rotation
-    
+        
     def draw(self):
         pygame.draw.circle(screen, self.color, self.loc, self.radius)
-        # Draw a line from the center to the end of the radius
-        #pygame.draw.line(screen, BLACK, self.loc, (self.loc[0] + self.radius, self.loc[1]))
+
+class Star():
+    def __init__(self):
+        # Set initial position randomly within the window
+        self.x = np.random.uniform(0, WINDOW_WIDTH)
+        self.y = np.random.uniform(0, WINDOW_HEIGHT)
+
+        # Set initial color to white
+        self.color = WHITE
+
+        # Set initial brightness randomly within a certain range
+        self.brightness = np.random.uniform(70, 100)
+
+        # Set a random change in brightness for the glitter effect
+        self.delta_brightness = np.random.uniform(-2, 2)
+
+    def update(self):
+        # Change brightness for the glitter effect
+        self.brightness += self.delta_brightness
+
+        # If brightness goes out of bounds, reverse the change in brightness
+        if self.brightness < 70 or self.brightness > 100:
+            self.delta_brightness = -self.delta_brightness
+
+        # Update color with new brightness
+        self.color = (int(self.brightness), int(self.brightness), int(self.brightness))
+
+    def draw(self):
+        pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), 1)
+
+        
 
 class UFO():
     def __init__(self, image, sound, speed, x, y):
@@ -168,6 +193,10 @@ phobos = Moon(GRAY, 8, 1.5, 80, mars, 1)  # counterclockwise
 deimos = Moon(GRAY, 6, 2, 120, mars, -1)  # clockwise
 
 def main():
+
+    # Create a list of stars
+    stars = [Star() for _ in range(1000)]
+
     done = False    
     while not done: 
         for event in pygame.event.get():
@@ -175,7 +204,6 @@ def main():
                 done = True 
 
         # Game logic
-        sun.update()
         earth.update()
         moon.update()
         mars.update()
@@ -183,15 +211,18 @@ def main():
         deimos.update()
         ufo1.update()
         ufo2.update()
-        #ufo3.update()
+        # Update stars
+        for star in stars:
+            star.update()
 
         # Screen filling
         screen.fill(BLACK)
 
         # Drawing
+        for star in stars:
+            star.draw()
         ufo1.draw()
         ufo2.draw()
-        #ufo3.draw()
         sun.draw()
 
         # Drawing Earth's orbit path

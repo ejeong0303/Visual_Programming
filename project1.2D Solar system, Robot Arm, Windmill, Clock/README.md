@@ -16,7 +16,7 @@ Project1: 2D Solar system, Robot Arm, Windmill, Clock
 
 5. Solar System
    - consists the Sun, Earth, Mars and their moons
-   - added the ufos that moves in random direction and speed with sound effects
+   - added the UFOs that move in random direction and speed with sound effects
    - the Earth, Mars, and their moons orbits and self rotates
    - drew the Earth and Mars's orbit path
    - reflects the real size of the planets and moons
@@ -25,7 +25,7 @@ Project1: 2D Solar system, Robot Arm, Windmill, Clock
 7. Blackhole
    - used the rotation method to implement the blackhole
    - used random colors to express the glittering effect of the stars
-   - stars swirls into the center of the screen
+   - stars swirl into the center of the screen
    - 1000 stars are created every run
    - sound effect added for the blackhole
    - new stars are created if more than 50% of the stars reach the center of the screen

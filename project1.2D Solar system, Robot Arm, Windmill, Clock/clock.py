@@ -33,6 +33,7 @@ ticktock_sound = pygame.mixer.Sound('assets/clock-ticking-natural-room-verb-1724
 # get the current time
 prev_hour = datetime.now().hour
 prev_sec = datetime.now().second
+prev_min = datetime.now().minute
 
 # set clock attributes
 center = (WINDOW_WIDTH/2 ,WINDOW_HEIGHT/2) # clock center
@@ -103,10 +104,10 @@ def main():
         min_arm.update(now.minute * 6)
         sec_arm.update(now.second * 6)
         # play the bell sound if the hour has changed
-        if now.hour != prev_hour:
+        if now.minute != prev_min:
             ticktock_sound.stop()  # stop the "ticktock" sound
             bell_sound.play()
-            prev_hour = now.hour
+            prev_min = now.minute
 
         # play the tick-tock sound if the second has changed
         elif now.second != prev_sec:

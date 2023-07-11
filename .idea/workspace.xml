@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cfa3524-77bc-42b8-9e8a-0b9812e3d496" name="Default Changelist" comment="project1 3rd revision commit">
+    <list default="true" id="4cfa3524-77bc-42b8-9e8a-0b9812e3d496" name="Default Changelist" comment="230704 revision commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/mixkit-arcade-mechanical-bling-210.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project1.2D Solar system, Robot Arm, Windmill, Clock/clock.py" beforeDir="false" afterPath="$PROJECT_DIR$/project1.2D Solar system, Robot Arm, Windmill, Clock/clock.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +48,7 @@
       <recent name="C:\Users\ejeon\Visual_Programming\project1.2D Solar system, Robot Arm, Windmill, Clock" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.blackhole (1)">
+  <component name="RunManager" selected="Python.assignment8">
     <configuration name="assignment4 (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="3 파이썬 게임" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -85,6 +83,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/assignment4.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="assignment8" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="3 파이썬 게임" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/assignments" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/assignments/assignment8.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -137,6 +156,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.assignment8" />
         <item itemvalue="Python.blackhole (1)" />
         <item itemvalue="Python.blackhole" />
         <item itemvalue="Python.assignment4 (1)" />
@@ -191,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688329735119</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="230704 revision commit">
+      <created>1688443317814</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1688443317814</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -210,6 +237,7 @@
     <MESSAGE value="project1 revision commit" />
     <MESSAGE value="project1 2nd revision commit" />
     <MESSAGE value="project1 3rd revision commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="project1 3rd revision commit" />
+    <MESSAGE value="230704 revision commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="230704 revision commit" />
   </component>
 </project>

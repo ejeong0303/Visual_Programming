@@ -289,7 +289,6 @@ class Platform(pygame.sprite.Sprite):
             self.rect.bottom = HEIGHT - 20
         if self.rect.top < 0:
             self.rect.top = 0
-
 class Bowser(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -308,11 +307,21 @@ class Bowser(pygame.sprite.Sprite):
 
     def update(self):
         if not self.hidden:
-            # move the boss mob
+            # move the boss mob towards the player
+            player = pygame.sprite.spritecollideany(self, player_group)  # find the player sprite
+            if player:
+                if player.rect.centerx < self.rect.centerx:
+                    self.speedx = -2  # move left
+                elif player.rect.centerx > self.rect.centerx:
+                    self.speedx = 2  # move right
+                else:
+                    self.speedx = 0  # stop moving if already at the same x position
+
             self.rect.x += self.speedx
             # change direction if hit the edge
             if self.rect.right > WIDTH or self.rect.left < 0:
                 self.speedx *= -1
+
             # boss shoots bullet
             now = pygame.time.get_ticks()
             if now - self.last_shot > self.shoot_delay:
@@ -321,7 +330,7 @@ class Bowser(pygame.sprite.Sprite):
                 all_sprites.add(bossbullet)
                 bossbullets.add(bossbullet)
             
-            # unhide if hidden
+        # unhide if hidden
         if self.hidden and pygame.time.get_ticks() - self.hide_timer > 1000:
             self.hidden = False
             self.rect.centerx = WIDTH / 2
@@ -332,7 +341,7 @@ class Bowser(pygame.sprite.Sprite):
         self.hide_timer = pygame.time.get_ticks()
         self.rect.center = (WIDTH / 2, HEIGHT + 200)
 
-class fly_Mob(pygame.sprite.Sprite): # 실제 날개 달고 떨어지고 있는것처럼 수정
+class fly_Mob(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image_orig = random.choice(flymob_images)
@@ -340,13 +349,13 @@ class fly_Mob(pygame.sprite.Sprite): # 실제 날개 달고 떨어지고 있는�
         self.image = self.image_orig.copy()
         self.rect = self.image.get_rect()
         self.radius = int(self.rect.width * .85 / 2)
-        # pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         self.rect.x = random.randrange(WIDTH - self.rect.width)
         self.rect.bottom = random.randrange(-80, -20)
         self.speedy = random.randrange(1, 6)
-        self.speedx = random.randrange(-2, 2)
         self.rot = 0
         self.rot_speed = random.randrange(-8, 8)
+        self.swing_range = random.randrange(20, 50)
+        self.swing_direction = random.choice([-1, 1])
         self.last_update = pygame.time.get_ticks()
 
     def rotate(self):
@@ -362,8 +371,10 @@ class fly_Mob(pygame.sprite.Sprite): # 실제 날개 달고 떨어지고 있는�
 
     def update(self):
         self.rotate()
-        self.rect.x += self.speedx
+        self.rect.x += self.swing_direction  # Apply swinging left or right
         self.rect.y += self.speedy
+        if abs(self.rect.x - self.rect.centerx) >= self.swing_range:
+            self.swing_direction *= -1  # Reverse swinging direction if reached swing range
         if self.rect.top > HEIGHT + 10 or self.rect.left < -100 or self.rect.right > WIDTH + 100:
             self.rect.x = random.randrange(WIDTH - self.rect.width)
             self.rect.y = random.randrange(-100, -40)
@@ -763,6 +774,7 @@ while running:
         bowser_appear = True
 
     if bowser_appear:
+        #bowser_appear = False
     # check to see if a bullet hit the boss
         all_sprites.remove(platform1)
         all_sprites.remove(platform2)
@@ -807,6 +819,7 @@ while running:
         draw_shield_bar(screen, 5, 5, player.shield)
         draw_lives(screen, WIDTH - 100, 5, player.lives, player_mini_img)
         draw_boss_shield_bar(screen, WIDTH / 2 - 50, 5, bowser.shield)  # draw the boss's life bar
+    
     else:
         screen.fill(BLACK)
         screen.blit(background, background_rect)
@@ -814,6 +827,7 @@ while running:
         draw_score(screen, str(score), 18, WIDTH / 2, 10)
         draw_shield_bar(screen, 5, 5, player.shield)
         draw_lives(screen, WIDTH - 100, 5, player.lives, player_mini_img)
+    
     pygame.display.flip()
 
 pygame.quit()

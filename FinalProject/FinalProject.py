@@ -43,6 +43,11 @@ def draw_score(surf, text, size, x, y):
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
 
+def newbossbullets():
+    bb = bossBullet()
+    all_sprites.add(bb)
+    bossbullets.add(bb)
+
 def newflymob():
     m = fly_Mob()
     all_sprites.add(m)
@@ -187,7 +192,6 @@ class Player(pygame.sprite.Sprite):
         if self.power >= 2 and pygame.time.get_ticks() - self.power_time > POWERUP_TIME:
             self.power -= 1
             self.power_time = pygame.time.get_ticks()
-
         
         if self.rect.bottom == HEIGHT - 100:
             self.speedy = 3
@@ -200,6 +204,7 @@ class Player(pygame.sprite.Sprite):
             self.speedx = 8
         if keystate[pygame.K_UP]:
             self.speedy = -2
+            jump_sound.play()
         if keystate[pygame.K_DOWN]:
             self.speedy = 4
         if keystate[pygame.K_SPACE]:
@@ -219,6 +224,10 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = HEIGHT - 20
         if self.rect.top < 0:
             self.rect.top = 0
+        if self.rect.colliderect(platform1.rect) and self.rect.bottom < platform1.rect.bottom:
+            self.rect.bottom = platform1.rect.top
+        if self.rect.colliderect(platform2.rect) and self.rect.bottom < platform2.rect.bottom:
+            self.rect.bottom = platform2.rect.top
     
 
     def powerup(self):
@@ -260,6 +269,27 @@ class Player(pygame.sprite.Sprite):
         self.hide_timer = pygame.time.get_ticks()
         self.rect.center = (WIDTH / 2, HEIGHT + 200)
 
+class Platform(pygame.sprite.Sprite):
+    def __init__(self, x, y, image):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        
+        #self.speedx = 1
+    def update(self):
+
+        if self.rect.right > WIDTH:
+            self.rect.right = WIDTH
+            #self.speedx = -1
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.bottom > HEIGHT - 20:
+            self.rect.bottom = HEIGHT - 20
+        if self.rect.top < 0:
+            self.rect.top = 0
+
 class Bowser(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -269,7 +299,7 @@ class Bowser(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH / 2, HEIGHT / 5)  # position the boss
         self.radius = int(self.rect.width * .85 / 2)
-        self.shield = 500
+        self.shield = 100
         self.speedx = 2
         self.last_shot = pygame.time.get_ticks()
         self.shoot_delay = 1000  # the boss will shoot every 1 second
@@ -287,9 +317,9 @@ class Bowser(pygame.sprite.Sprite):
             now = pygame.time.get_ticks()
             if now - self.last_shot > self.shoot_delay:
                 self.last_shot = now
-                bullet = bossBullet(self.rect.centerx, self.rect.bottom, boss_bullet_image, speedx=0, speedy=10)
-                all_sprites.add(bullet)
-                bullets.add(bullet)
+                bossbullet = bossBullet(self.rect.centerx, self.rect.bottom, boss_bullet_image, speedx=0, speedy=10)
+                all_sprites.add(bossbullet)
+                bossbullets.add(bossbullet)
             
             # unhide if hidden
         if self.hidden and pygame.time.get_ticks() - self.hide_timer > 1000:
@@ -375,7 +405,7 @@ class stay_Mob(pygame.sprite.Sprite):
         self.image_orig.set_colorkey(BLACK)
         self.image = self.image_orig.copy()
         self.rect = self.image.get_rect()
-        self.rect.x = random.choice([60, 120, 360, 420])
+        self.rect.x = random.choice([60, 420])
         self.rect.y = HEIGHT - self.rect.height
 
 class Bullet(pygame.sprite.Sprite):
@@ -397,7 +427,7 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
 
 class bossBullet(pygame.sprite.Sprite):
-    def __init__(self, x, y, image, speedx=0, speedy=-10):
+    def __init__(self, x, y, image, speedx=0, speedy=10):
         pygame.sprite.Sprite.__init__(self)
         self.image = image
         self.image.set_colorkey(BLACK)
@@ -480,6 +510,13 @@ player_img = pygame.image.load(path.join(img_dir, "peach.png")).convert()
 player_img = pygame.transform.scale(player_img, (40, 40))
 player_mini_img = pygame.transform.scale(player_img, (40, 40))
 player_mini_img.set_colorkey(BLACK)
+platform1_image = pygame.image.load(path.join(img_dir, "brickplatform1.png")).convert_alpha()
+platform1_image = pygame.transform.scale(platform1_image, (60, 20))
+platform1_image.set_colorkey(BLACK)
+platform2_image = pygame.image.load(path.join(img_dir, "brickplatform2.png")).convert_alpha()
+platform2_image = pygame.transform.scale(platform2_image, (40, 20))
+platform2_image.set_colorkey(BLACK)
+
 bullet_images = {
     'peach': pygame.image.load(path.join(img_dir, 'peachheart1.png')).convert(),
     'mario': pygame.image.load(path.join(img_dir, 'mariofireball1.png')).convert(),
@@ -517,9 +554,12 @@ powerup_images = {}
 powerup_images['shield'] = pygame.image.load(path.join(img_dir, 'energyflower.png')).convert()
 powerup_images['shield_gold'] = pygame.image.load(path.join(img_dir, 'goldflower.png')).convert()
 powerup_images['gun'] = pygame.image.load(path.join(img_dir, 'MushroomMarioKart8_small1.png')).convert()
-
+powerup_images['minimush'] = pygame.image.load(path.join(img_dir, 'MushroomMarioKart8_small2.png')).convert()
+powerup_images['bigmush'] = pygame.image.load(path.join(img_dir, 'MushroomMarioKart8_big2.png')).convert()
+powerup_images['goldmush'] = pygame.image.load(path.join(img_dir, 'MushroomMarioKart8_big1.png')).convert()
 
 # Load all game sounds
+jump_sound = pygame.mixer.Sound(path.join(snd_dir, 'smb_jump.wav'))
 shoot_sound = pygame.mixer.Sound(path.join(snd_dir, 'smb_fireball.wav'))
 shield_sound = pygame.mixer.Sound(path.join(snd_dir, 'smb_powerup.wav'))
 power_sound = pygame.mixer.Sound(path.join(snd_dir, 'smb_powerup_appears.wav'))
@@ -557,10 +597,18 @@ while running:
         groundmobs = pygame.sprite.Group()
         staymobs = pygame.sprite.Group()
         bullets = pygame.sprite.Group()
-        
+        bossbullets = pygame.sprite.Group()
+        explosions = pygame.sprite.Group()
+
+        platform1 = Platform(120, HEIGHT - 100, platform1_image)
+        platform2 = Platform(360, HEIGHT - 100, platform2_image)
+        all_sprites.add(platform1)
+        all_sprites.add(platform2)
+
         powerups = pygame.sprite.Group()
         player = Player(character, bullet_images[character])
         all_sprites.add(player)
+        player_group = pygame.sprite.Group()
         for i in range(2):
             newflymob()
         for i in range(ground_mobs_count):  
@@ -693,10 +741,11 @@ while running:
         if hit.type == 'gun':
             player.powerup()
             power_sound.play()
+            
     if player.lives == 0 and not death_explosion.alive():
         game_over = True
 
-    if not bowser_appear and score >= 100:
+    if not bowser_appear and score >= 20:
         score = 0
     # remove all the current mobs
         for sprite in all_sprites:
@@ -708,26 +757,30 @@ while running:
         all_sprites.add(bowser)
         bossbullets = bossBullet(bowser.rect.centerx, bowser.rect.bottom, boss_bullet_image, speedx=0, speedy=10)
         all_sprites.add(bossbullets)
+        bossbullets = pygame.sprite.Group()
         bowser_group = pygame.sprite.Group(bowser)
-        bowser_bullet = pygame.sprite.Group(bossbullets)
         all_sprites.update()
         bowser_appear = True
 
     if bowser_appear:
-        bowser.shield = 100
     # check to see if a bullet hit the boss
-        hits = pygame.sprite.groupcollide(bowser_group, bowser_bullet, False, False)
+        all_sprites.remove(platform1)
+        all_sprites.remove(platform2)
+        platform1.kill()
+        platform2.kill()
+        hits = pygame.sprite.groupcollide(bowser_group, bullets, False, True)
         for hit in hits:
             bowser.shield -= 10
             random.choice(expl_sounds).play()
             expl = Explosion(bowser.rect.center, 'lg')
             all_sprites.add(expl)
+            
             if bowser.shield <= 0:  # if boss is dead
                 bowser.kill()
                 game_over = True  # finish the game
 
         # check to see if a bullet hit the player
-        hits = pygame.sprite.spritecollide(player, bowser_bullet, True, pygame.sprite.collide_circle)
+        hits = pygame.sprite.spritecollide(player, bossbullets, True, pygame.sprite.collide_circle)
         for hit in hits:
             player_powerdown_sound.play()
             player.shield -= 10 
@@ -746,43 +799,21 @@ while running:
             if player.lives == 0:
                 game_over = True
 
-        #hits = pygame.sprite.spritecollide(player, bowser_group, True, pygame.sprite.collide_circle)
-        #for hit in hits:
-        #    player_powerdown_sound.play()
-        #    player.shield -= 10  # adjust this value to change how much damage the boss does
-        #    expl = Explosion(hit.rect.center, 'lg')
-        #    all_sprites.add(expl)
-        #    if player.shield <= 0:
-        #        if player.lives > 1:
-        #            player_die_sound.play()
-        #        else: 
-        #            player_finaldie_sound.play()
-        #            death_explosion = Explosion(player.rect.center, 'player')
-        #            all_sprites.add(death_explosion)
-        #            player.hide()
-        #            player.lives -= 1
-        #            player.shield = 100
-        #        if player.lives == 0:
-        #            game_over = True
-
-    # if the player died and the explosion has finished playing
-
-
     # Draw / render
-    screen.fill(BLACK)
-    screen.blit(background, background_rect)
     if bowser_appear:
+        screen.fill(BLACK)
         screen.blit(bossbackground, background_rect)
-    
-    all_sprites.draw(screen)
-    draw_score(screen, str(score), 18, WIDTH / 2, 10)
-    draw_shield_bar(screen, 5, 5, player.shield)
-    draw_lives(screen, WIDTH - 100, 5, player.lives, player_mini_img)
-    # *after* drawing everything, flip the display
-    if bowser_appear:
-        #screen.blit(bossbackground, background_rect)
+        all_sprites.draw(screen)
+        draw_shield_bar(screen, 5, 5, player.shield)
+        draw_lives(screen, WIDTH - 100, 5, player.lives, player_mini_img)
         draw_boss_shield_bar(screen, WIDTH / 2 - 50, 5, bowser.shield)  # draw the boss's life bar
-
+    else:
+        screen.fill(BLACK)
+        screen.blit(background, background_rect)
+        all_sprites.draw(screen)
+        draw_score(screen, str(score), 18, WIDTH / 2, 10)
+        draw_shield_bar(screen, 5, 5, player.shield)
+        draw_lives(screen, WIDTH - 100, 5, player.lives, player_mini_img)
     pygame.display.flip()
 
 pygame.quit()

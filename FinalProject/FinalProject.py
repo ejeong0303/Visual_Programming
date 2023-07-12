@@ -587,7 +587,7 @@ pygame.mixer.music.set_volume(0.4)
 
 pygame.mixer.music.play(loops=-1)
 special_mob_timer = pygame.time.get_ticks()
-ground_mobs_count = 1  # Start with 1 ground mobs
+ground_mobs_count = 2  # Start with 1 ground mobs
 time_no_groundmobs = 0
 
 # Game loop
@@ -620,7 +620,7 @@ while running:
         player = Player(character, bullet_images[character])
         all_sprites.add(player)
         player_group = pygame.sprite.Group()
-        for i in range(2):
+        for i in range(6):
             newflymob()
         for i in range(ground_mobs_count):  
             newgroundmob()

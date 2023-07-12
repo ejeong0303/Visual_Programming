@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cfa3524-77bc-42b8-9e8a-0b9812e3d496" name="Default Changelist" comment="230712 finalproject commit">
+    <list default="true" id="4cfa3524-77bc-42b8-9e8a-0b9812e3d496" name="Default Changelist" comment="230712 finalproject 3rd commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FinalProject/FinalProject.py" beforeDir="false" afterPath="$PROJECT_DIR$/FinalProject/FinalProject.py" afterDir="false" />
     </list>
@@ -233,7 +233,21 @@
       <option name="project" value="LOCAL" />
       <updated>1689103916733</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="230712 finalproject 2nd commit">
+      <created>1689107086009</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1689107086009</updated>
+    </task>
+    <task id="LOCAL-00010" summary="230712 finalproject 3rd commit">
+      <created>1689107878719</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1689107878719</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -255,6 +269,8 @@
     <MESSAGE value="230704 revision commit" />
     <MESSAGE value="230711 finalproject commit" />
     <MESSAGE value="230712 finalproject commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="230712 finalproject commit" />
+    <MESSAGE value="230712 finalproject 2nd commit" />
+    <MESSAGE value="230712 finalproject 3rd commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="230712 finalproject 3rd commit" />
   </component>
 </project>

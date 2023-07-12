@@ -25,7 +25,7 @@ PINK = (255, 102, 204)
 pygame.init()
 pygame.mixer.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Supermario's Flight")
+pygame.display.set_caption("Supermario's Adventure")
 clock = pygame.time.Clock()
 
 def draw_text(surf, text, size, x, y):
@@ -497,7 +497,7 @@ class Explosion(pygame.sprite.Sprite):
 
 def show_go_screen():
     screen.blit(background, background_rect)
-    draw_text(screen, "SUPERMARIO'S FLIGHT", 40, WIDTH / 2, HEIGHT / 4)
+    draw_text(screen, "SUPERMARIO'S ADVENTURE", 30, WIDTH / 2, HEIGHT / 4)
     draw_text(screen, "Arrow keys move, Space to fire", 22,
               WIDTH / 2, HEIGHT / 2)
     draw_text(screen, "Press a key to begin", 18, WIDTH / 2, HEIGHT * 3 / 4 - 30)
@@ -756,7 +756,7 @@ while running:
     if player.lives == 0 and not death_explosion.alive():
         game_over = True
 
-    if not bowser_appear and score >= 20:
+    if not bowser_appear and score >= 1000:
         score = 0
     # remove all the current mobs
         for sprite in all_sprites:

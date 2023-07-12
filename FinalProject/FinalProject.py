@@ -784,7 +784,7 @@ while running:
         show_game_over_screen()
         game_over = True
 
-    if not bowser_appear and score >= 100:
+    if not bowser_appear and score >= 1000:
         score = 0
     # remove all the current mobs
         for sprite in all_sprites:

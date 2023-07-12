@@ -77,7 +77,7 @@ def draw_shield_bar(surf, x, y, pct):
 def draw_boss_shield_bar(surf, x, y, pct):
     if pct < 0:
         pct = 0
-    BAR_LENGTH = 100
+    BAR_LENGTH = 150
     BAR_HEIGHT = 10
     fill = (pct / 100) * BAR_LENGTH
     outline_rect = pygame.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
@@ -289,6 +289,7 @@ class Platform(pygame.sprite.Sprite):
             self.rect.bottom = HEIGHT - 20
         if self.rect.top < 0:
             self.rect.top = 0
+
 class Bowser(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -304,6 +305,8 @@ class Bowser(pygame.sprite.Sprite):
         self.shoot_delay = 1000  # the boss will shoot every 1 second
         self.hidden = False
         self.hide_timer = pygame.time.get_ticks()
+        self.last_pos = pygame.time.get_ticks()
+        self.pos_delay = 1000
 
     def update(self):
         if not self.hidden:
@@ -312,10 +315,13 @@ class Bowser(pygame.sprite.Sprite):
             if player:
                 if player.rect.centerx < self.rect.centerx:
                     self.speedx = -2  # move left
+                    self.speedy = random.choice([-2, 2])
                 elif player.rect.centerx > self.rect.centerx:
                     self.speedx = 2  # move right
+                    self.speedy = random.choice([-2, 2])
                 else:
                     self.speedx = 0  # stop moving if already at the same x position
+                    self.speedy = random.choice([-2, 2])
 
             self.rect.x += self.speedx
             # change direction if hit the edge
@@ -329,7 +335,12 @@ class Bowser(pygame.sprite.Sprite):
                 bossbullet = bossBullet(self.rect.centerx, self.rect.bottom, boss_bullet_image, speedx=0, speedy=10)
                 all_sprites.add(bossbullet)
                 bossbullets.add(bossbullet)
-            
+
+            now = pygame.time.get_ticks()
+            if now - self.last_pos > self.pos_delay:
+                self.pos_shot = now
+                self.speedy = random.choice([-2, 2])
+
         # unhide if hidden
         if self.hidden and pygame.time.get_ticks() - self.hide_timer > 1000:
             self.hidden = False
@@ -354,8 +365,8 @@ class fly_Mob(pygame.sprite.Sprite):
         self.speedy = random.randrange(1, 6)
         self.rot = 0
         self.rot_speed = random.randrange(-8, 8)
-        self.swing_range = random.randrange(20, 50)
-        self.swing_direction = random.choice([-1, 1])
+        self.swing_range = random.randrange(30, 70)
+        self.swing_direction = random.choice([-2, 2])
         self.last_update = pygame.time.get_ticks()
 
     def rotate(self):
@@ -666,7 +677,7 @@ while running:
             ground_mobs_count += 1
             # Reset the time_no_groundmobs variable
             time_no_groundmobs = 0
-    elif len(groundmobs) > 1:
+    elif len(groundmobs) > 2:
         groundmob = groundmobs.sprites()[0]  # get a reference to one of the ground mobs
         groundmob.kill()  # remove it
         ground_mobs_count -= 1
@@ -810,7 +821,7 @@ while running:
         platform2.kill()
         hits = pygame.sprite.groupcollide(bowser_group, bullets, False, True)
         for hit in hits:
-            bowser.shield -= 10
+            bowser.shield -= 1
             random.choice(expl_sounds).play()
             expl = Explosion(bowser.rect.center, 'lg')
             all_sprites.add(expl)

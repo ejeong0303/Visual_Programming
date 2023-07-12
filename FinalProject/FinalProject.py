@@ -28,9 +28,9 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Supermario's Adventure")
 clock = pygame.time.Clock()
 
-def draw_text(surf, text, size, x, y):
+def draw_text(surf, text, size, x, y, color = WHITE):
     font = pygame.font.Font('FinalProject/tlpsmb.ttf', size)
-    text_surface = font.render(text, True, WHITE)
+    text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
@@ -511,6 +511,32 @@ def show_go_screen():
             if event.type == pygame.KEYUP:
                 waiting = False
 
+def show_game_over_screen():
+    screen.fill(BLACK)
+    draw_text(screen, "Game Over", 50, WIDTH / 2, HEIGHT *1/ 3, RED)
+    draw_text(screen, "Press 'R' to play again", 18, WIDTH / 2, HEIGHT * 3 / 4)
+    pygame.display.flip()
+    wait_for_restart()
+
+def show_player_wins_screen():
+    screen.fill(BLACK)
+    draw_text(screen, "Player Wins!", 50, WIDTH / 2, HEIGHT *1/3, GREEN)
+    draw_text(screen, "Press 'R' to play again", 18, WIDTH / 2, HEIGHT *  3/ 4)
+    pygame.display.flip()
+    wait_for_restart()
+
+def wait_for_restart():
+    waiting = True
+    while waiting:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_r:
+                    waiting = False
+
+
 # Load all game graphics
 background = pygame.image.load(path.join(img_dir, "new1.png")).convert()
 background_rect = background.get_rect()
@@ -586,6 +612,7 @@ pygame.mixer.music.load(path.join(snd_dir, 'super_mario_medley.mp3'))
 pygame.mixer.music.set_volume(0.4)
 
 pygame.mixer.music.play(loops=-1)
+
 special_mob_timer = pygame.time.get_ticks()
 ground_mobs_count = 2  # Start with 1 ground mobs
 time_no_groundmobs = 0
@@ -754,9 +781,10 @@ while running:
             power_sound.play()
             
     if player.lives == 0 and not death_explosion.alive():
+        show_game_over_screen()
         game_over = True
 
-    if not bowser_appear and score >= 1000:
+    if not bowser_appear and score >= 100:
         score = 0
     # remove all the current mobs
         for sprite in all_sprites:
@@ -789,6 +817,7 @@ while running:
             
             if bowser.shield <= 0:  # if boss is dead
                 bowser.kill()
+                show_player_wins_screen()
                 game_over = True  # finish the game
 
         # check to see if a bullet hit the player
@@ -809,6 +838,7 @@ while running:
                 player.lives -= 1
                 player.shield = 100
             if player.lives == 0:
+                show_game_over_screen()
                 game_over = True
 
     # Draw / render

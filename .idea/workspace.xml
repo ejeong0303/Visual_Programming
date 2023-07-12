@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cfa3524-77bc-42b8-9e8a-0b9812e3d496" name="Default Changelist" comment="230712 finalproject 3rd commit">
+    <list default="true" id="4cfa3524-77bc-42b8-9e8a-0b9812e3d496" name="Default Changelist" comment="230712 finalproject 4th commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FinalProject/FinalProject.py" beforeDir="false" afterPath="$PROJECT_DIR$/FinalProject/FinalProject.py" afterDir="false" />
     </list>
@@ -247,7 +247,21 @@
       <option name="project" value="LOCAL" />
       <updated>1689107878719</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="230712 finalproject 4th commit">
+      <created>1689121528836</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1689121528836</updated>
+    </task>
+    <task id="LOCAL-00012" summary="230712 finalproject 4th commit">
+      <created>1689121926042</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1689121926042</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -271,6 +285,7 @@
     <MESSAGE value="230712 finalproject commit" />
     <MESSAGE value="230712 finalproject 2nd commit" />
     <MESSAGE value="230712 finalproject 3rd commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="230712 finalproject 3rd commit" />
+    <MESSAGE value="230712 finalproject 4th commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="230712 finalproject 4th commit" />
   </component>
 </project>
